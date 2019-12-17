@@ -1,0 +1,33 @@
+help_text: |
+  ---------------------------------------------------------------------
+  this is item help!
+
+  init: add dirs like 'src', 'bin', 'include', add 'build' and so on.
+  make: from src dir's file use gcc or else to build execable file.
+  run : run the execable file.
+
+  exit: exit the app_bot.
+  quit: exit the qpp_bot.
+
+  help: show this doc.
+  ---------------------------------------------------------------------
+
+
+lang_config:
+  C:
+    make:
+      - gcc
+      - ${item_root}/src/${file_name}
+      - -o
+      - ${item_root}/bin/${file_name_without_suffix}
+    run:
+      - ${item_root}/bin/${file_name}
+
+  cpp:
+    make:
+      - gcc
+      - ${item_root}/src/${file_name}
+      - -o
+      - ${item_root}/bin/${file_name_without_suffix}
+    run:
+      - ${item_root}/bin/${file_name}

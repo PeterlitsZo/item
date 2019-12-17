@@ -1,7 +1,7 @@
 from core import item
 import subprocess
 from sys import argv
-from color import sec
+from color import sec, imp
 
 def deal_with_command(item, command:list):
     if command == []:
