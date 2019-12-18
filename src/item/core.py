@@ -1,7 +1,7 @@
 from pathlib import Path
-from src.color import imp, sec
-from src.get_Path import get_parent_dir_ls
-from src.read_config import data
+from .color import imp, sec
+from .get_Path import get_parent_dir_ls
+from .read_config import data
 
 class item():
     def __init__(self):
