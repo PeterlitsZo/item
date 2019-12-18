@@ -7,6 +7,9 @@ def data(item_root:Path):
 
     local_doc = item_root / 'build' / 'item_config.yaml'
     if local_doc.exists():
-        data.update(yaml.load(local_doc.read_text()))
+        try:
+            data.update(yaml.load(local_doc.read_text()))
+        except:
+            pass
 
     return data

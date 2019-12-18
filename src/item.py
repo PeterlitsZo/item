@@ -1,7 +1,7 @@
-from core import item
+from src.core import item as item_class
 import subprocess
 from sys import argv
-from color import sec, imp
+from src.color import sec, imp
 
 def deal_with_command(item, command:list):
     if command == []:
@@ -28,8 +28,8 @@ def deal_with_command(item, command:list):
         print(imp('[ERROR] something error has happend\n'))
 
 
-if __name__ == '__main__':
-    item = item()
+def main():
+    item = item_class()
 
     if len(argv) > 1:
         # use item like: '$ item init'
@@ -43,3 +43,6 @@ if __name__ == '__main__':
             result = deal_with_command(item, input(item.input_help()).split())
             if result == 'break': break
             if result == 'continue': continue
+
+if __name__ == '__main__':
+    main()

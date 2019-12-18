@@ -15,6 +15,47 @@ item 是用来快速管理，运行，开发结构化程序的命令行小程序
 - colored: 用来给输出染色，没有该包输出会全变为默认颜色。
 - pyyaml: 用来读取配置文件。
 
+配置文件
+---------------------------
+使用简单的`yaml`文件格式作为数据结构表示。
+
+和应用程序处在同一个文件夹的`yaml`是第一个加载的文件，同时优先度也最低，容易被局部的配置给覆盖住。
+
+比如使用`help`后输出的数据`help_text`如下表示：
+``` yaml
+help_text: |
+  ---------------------------------------------------------------------
+  this is item help!
+
+  init: add dirs like 'src', 'bin', 'include', add 'build' and so on.
+  make: from src dir's file use gcc or else to build execable file.
+  run : run the execable file.
+
+  exit: exit the app_bot.
+  quit: exit the qpp_bot.
+
+  help: show this doc.
+  ---------------------------------------------------------------------
+
+```
+
+而配置`cpp`的编译运行如下（暂未实现）：
+``` yaml
+lang_config:
+    ...
+
+    cpp:
+        make:
+        - gcc
+        - ${item_root}/src/${file_name}
+        - -o
+        - ${item_root}/bin/${file_name_without_suffix}
+        run:
+        - ${item_root}/bin/${file_name}
+
+    ...
+```
+
 todo
 ---------------------------
 - 通过读取yaml配置文件，来改变`item`的行为。如：使用的编辑器，`init`后构建的模板结构，使用什么编译器，来生成文件。
@@ -27,3 +68,6 @@ todo
 - 打算做一个vscode的插件。
 - 应该有`setup.py`来打包依赖包。
 - 听说读取配置时`libyaml`会更快一点，之后争取搞上去。（脸红）
+- 用`config`命令来修改变量。
+- 实现tab补全和模糊搜索。
+- UML图。

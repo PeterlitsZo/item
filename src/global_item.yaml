@@ -31,3 +31,17 @@ lang_config:
       - ${item_root}/bin/${file_name_without_suffix}
     run:
       - ${item_root}/bin/${file_name}
+
+  python:
+    make:
+      -
+    run:
+      - python
+      - ${item_root}/src/${file_name}
+
+  latex:
+    make:
+      - xelatex
+      - xelatex
+    run:
+      -

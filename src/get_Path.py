@@ -1,5 +1,5 @@
 from pathlib import Path
-from color import imp, sec
+from src.color import imp, sec
 
 def get_parent_dir_ls(dir_str):
     dir_path = Path(dir_str)
