@@ -20,12 +20,11 @@ def deal_with_command(item, command:list):
             return 'break'
         elif command[0][0] == '!':
             subprocess.run(command[0][1:], cwd=item.item_root)
-            print()
 
         else:
-            print(imp(f"no command '{command[0]}', enter 'h' for help\n"))
+            print(imp(f"no command '{command[0]}', enter 'h' for help"))
     except:
-        print(imp('[ERROR] something error has happend\n'))
+        print(imp('[ERROR] something error has happend'))
 
 
 def main():
@@ -43,6 +42,7 @@ def main():
             result = deal_with_command(item, input(item.input_help()).split())
             if result == 'break': break
             if result == 'continue': continue
+            print()
 
 if __name__ == '__main__':
     main()

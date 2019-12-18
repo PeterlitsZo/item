@@ -18,9 +18,8 @@ class item():
                 print(dir_name, 'was built right now')
             (self.dir_['build'] / 'item_config.yaml').touch(exist_ok=True)
             print("config file in dir 'build' is built right now")
-            print()
         else:
-            print(imp('you are already are in inited item, I can\'t init it twice\n'))
+            print(imp('you are already are in inited item, I can\'t init it twice'))
 
     def is_item(self):
         # if there is 'item_config.yaml' in dir './build',

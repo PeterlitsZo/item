@@ -66,8 +66,8 @@ todo
 - 提供用`pyinstall`生成的二进制文件。
 - `item._get_valid_file`中键入`?q`后退出的功能还没有实现。
 - 打算做一个vscode的插件。
-- 应该有`setup.py`来打包依赖包。
 - 听说读取配置时`libyaml`会更快一点，之后争取搞上去。（脸红）
 - 用`config`命令来修改变量。
 - 实现tab补全和模糊搜索。
 - UML图。
+- 更好的`setup.py`文件。
