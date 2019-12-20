@@ -1,17 +1,25 @@
-help_text: |
-  ---------------------------------------------------------------------
-  this is item help!
+help_text:
+  help_None: |-
+    ---------------------------------------------------------------------
+    this is item help!
 
-  init: add dirs like 'src', 'bin', 'include', add 'build' and so on.
-  make: from src dir's file use gcc or else to build execable file.
-  run : run the execable file.
+    init: add dirs like 'src', 'bin', 'include', add 'build' and so on.
+    make: from src dir's file use gcc or else to build execable file.
+    run : run the execable file.
 
-  exit: exit the app_bot.
-  quit: exit the qpp_bot.
+    exit: exit the app_bot.
+    quit: exit the qpp_bot.
 
-  help: show this doc.
-  ---------------------------------------------------------------------
-
+    help: show this doc.
+    ---------------------------------------------------------------------
+  help_init: |
+    None
+  help_exit: |
+    None
+  help_quit: |
+    None
+  help_help: |
+    None
 lang_config:
   C:
     make:

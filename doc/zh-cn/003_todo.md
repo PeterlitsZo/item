@@ -10,6 +10,6 @@ TODO
 - 听说读取配置时`libyaml`会更快一点，之后争取搞上去。（脸红）
 - 用`config`命令来修改变量。
 - 实现tab补全和模糊搜索。
-- UML图。（使用`graphviz`和`Pyreverse`）（没有我想象地那么好实现）
 - 把`run`和`make`做非特殊化处理。
 - 编写`help command`的文档。
+- 颜色标签</>。

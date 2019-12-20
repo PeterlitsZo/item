@@ -19,7 +19,8 @@ def deal_with_command(item, command:list):
         elif command[0] in ('exit', 'e', 'quit', 'q'):
             return 'break'
         elif command[0][0] == '!':
-            subprocess.run(command[0][1:], cwd=item.item_root)
+            command[0] = command[0][1:]
+            subprocess.run(command, cwd=item.item_root)
 
         else:
             print(imp(f"no command '{command[0]}', enter 'h' for help"))

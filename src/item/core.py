@@ -52,11 +52,16 @@ class item():
         else:
             return imp(f'{self.item_root} > ')
 
-    def help(self):
+    def help(self, *command):
         # show the help message
-        # help_txt = Path(__file__).parent / 'help.txt'
-        # print(help_txt.open().read())
-        print(self.config['help_text'])
+        if len(command) == 0:
+            command = 'None'
+        else:
+            command = '_'.join([str(c) for c in command])
+        try:
+            print(self.config['help_text'][f'help_{command}'])
+        except:
+            print(f"there is not tag called 'help_text'/'help_{command}'")
 
     def _get_valid_file(self, path):
         # get the exist file's path
