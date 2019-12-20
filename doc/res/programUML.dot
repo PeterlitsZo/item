@@ -1,0 +1,60 @@
+digraph "classes" {
+    charset="utf-8";
+    graph [labeljust = l];
+    compound=true;
+    colorscheme=pastel13;
+    node [colorscheme=pastel13, style=filled];
+
+    subgraph cluster_item{
+        main [label="main()", shape="record"];
+        deal_with_command [label="deal_with_command()", shape="record"];
+        deal_with_command -> main [label=" result"];
+        main -> deal_with_command [label=" command:list\l item:item\l"];
+        label = "item.py";
+        bgcolor = 1;
+    }
+
+    subgraph cluster_core{
+        item [label="{item|item_root\l dir_\l config\l|
+              is_item()\l make()\l run()\l input_help()\l help()\l
+              _get_valid_file()\l}", shape="record"];
+        label = "core.py"
+        bgcolor = 1
+    }
+
+    subgraph cluster_color{
+        imp [label="{imp}", shape="record"];
+        sec [label="{sec}", shape="record"];
+        label = "color.py";
+        bgcolor = 2;
+    }
+
+    subgraph cluster_read_config{
+        read_config [label="{read_config}", shape="record"];
+        label = "read_config.py";
+        bgcolor = 2;
+    }
+
+    subgraph cluster_get_Path{
+        get_valid_file [label="{get_valid_file}", shape="record"];
+        label = "get_Path.py";
+        bgcolor = 2;
+    }
+
+    colored -> imp [lhead=cluster_color];
+    pyyaml -> read_config [lhead=cluster_read_config];
+
+    read_config -> imp [lhead=cluster_color, style=dotted, constraint=false];
+    read_config -> main [lhead=cluster_item, style=dotted];
+    read_config -> item [lhead=cluster_core, style=dotted];
+
+    imp -> main [lhead=cluster_item, ltail=cluster_color, style=dotted];
+    imp -> item [lhead=cluster_core, ltail=cluster_color, style=dotted];
+    imp -> get_valid_file [lhead=cluster_get_Path, ltail=cluster_color, style=dotted];
+
+    item -> get_valid_file;
+
+    "other program \nwith sys.argv" [fillcolor = 1]
+    "other program \nwith sys.argv" -> main;
+    deal_with_command -> item[constraint=false];
+}

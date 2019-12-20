@@ -29,4 +29,5 @@
 - .gitignore
 ```
 
-（未完）
+而源文件保持以下的构造：
+![programUML](../res/programUML.png)
