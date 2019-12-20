@@ -1,48 +1,40 @@
 from pathlib import Path
 from .color import imp, sec
 from .get_Path import get_parent_dir_ls
-from .read_config import data
+from .config import config, _data
 
 class item():
     def __init__(self):
         self.item_root = Path.cwd()
-        self.dir_ = {dir_name: self.item_root / dir_name for dir_name in ('bin', 'src', 'include', 'build')}
-        self.config = data(self.item_root)
+        try:
+            self.config = _data(self.item_root / 'build' / 'item_config.yaml')
+        except:
+            self.config = {}
+        self.global_config = _data(Path(__file__).parent / 'global_item_config.yaml')
 
-    def init(self):
-        # make a current dir be a 'item'
+    def init(self, *command):
+        # make a current dir be an 'item'
         # self.is_item(): False -> True
+        if len(command) > 1:
+            command = command[0]
+            print(f"command is too long, taste as 'init {command}''")
+        elif len(command) == 0:
+            print(f"init need the case like 'init cpp'")
+        else:
+            command = command[0]
+
         if not self.is_item():
-            for dir_name in self.dir_:
-                self.dir_[dir_name].mkdir(exist_ok = True)
-                print(dir_name, 'was built right now')
-            (self.dir_['build'] / 'item_config.yaml').touch(exist_ok=True)
-            print("config file in dir 'build' is built right now")
+            local_config = self.item_root / 'build' / 'item_config.yaml'
+            global_config = Path(__file__).parent / 'global_item_config.yaml'
+            config(global_config, local_config, command, self.item_root)
+
         else:
             print(imp('you are already are in inited item, I can\'t init it twice'))
 
     def is_item(self):
         # if there is 'item_config.yaml' in dir './build',
         # then it is a 'item'
-        return (self.dir_['build'] / 'item_config.yaml').exists()
-
-    def make(self, file_name:str = None):
-        # from dir './src' to build bin file and then move it to dir 'bin'
-        if file_name == None:
-            self.make(self._get_valid_file(self.dir_['src']))
-        elif (self.dir_['src'] / file_name).exists():
-            subprocess.run(['gcc', self.dir_['src'] / file_name, '-o', (self.dir_['bin'] / file_name).with_suffix('')])
-        else:
-            self.make(None)
-
-    def run(self, file_name:str = None):
-        # run the 'bin' file
-        if file_name == None:
-            self.run(self._get_valid_file(self.dir_['bin']))
-        elif (self.dir_['bin'] / file_name).exists():
-            subprocess.run([self.dir_['bin'] / file_name])
-        else:
-            self.run(None)
+        return (self.item_root / 'build' / 'item_config.yaml').exists()
 
     def input_help(self):
         # item: /path/to/item(under item) >_
@@ -52,6 +44,10 @@ class item():
         else:
             return imp(f'{self.item_root} > ')
 
+    def cd(self, *command):
+        new_dir = command[0]
+        self.item_root = Path(new_dir)
+
     def help(self, *command):
         # show the help message
         if len(command) == 0:
@@ -59,7 +55,7 @@ class item():
         else:
             command = '_'.join([str(c) for c in command])
         try:
-            print(self.config['help_text'][f'help_{command}'])
+            print(self.global_config['__help_text__'][f'help_{command}'])
         except:
             print(f"there is not tag called 'help_text'/'help_{command}'")
 

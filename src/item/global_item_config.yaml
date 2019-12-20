@@ -1,0 +1,67 @@
+_help_text_:
+  help_None: |-
+    ---------------------------------------------------------------------
+    this is item help!
+
+    init: add dirs like 'src', 'bin', 'include', add 'build' and so on.
+    make: from src dir's file use gcc or else to build execable file.
+    run : run the execable file.
+
+    exit: exit the app_bot.
+    quit: exit the qpp_bot.
+
+    help: show this doc.
+    ---------------------------------------------------------------------
+  help_init: |-
+    None
+  help_exit: |-
+    None
+  help_quit: |-
+    None
+  help_help: |-
+    None
+
+__init__:
+  C:
+    __new_dir__:
+      - bin
+      - build
+      - doc
+      - include
+      - src
+    __file__:
+      - build/item_config.yaml
+    __command__:
+      - ['!git', init]
+      - ['!git', add, '.']
+    make:
+      - ['!gcc', '${item_root}/src/${file_name}', -o, '${item_root}/bin/${file_name_without_suffix}']
+    run:
+      - ['!${item_root}/bin/${file_name}']
+
+  cpp:
+    __new_dir__:
+      - bin
+      - build
+      - doc
+      - include
+      - src
+    __file__:
+      - build/item_config.yaml
+    make:
+      - ['!gcc', '${item_root}/src/${file_name}', -o, '${item_root}/bin/${file_name_without_suffix}']
+    run:
+      - ['!${item_root}/bin/${file_name}']
+
+  python:
+    make:
+      - [] # do nothing
+    run:
+      - ['!python', '${item_root}/src/${file_name}']
+
+  latex:
+    make:
+      - ['!xelatex', '${item_root}/src/${file_name}']
+      - ['!xelatex', '${item_root}/src/${file_name}']
+    run:
+      - [] # do nothing
