@@ -14,7 +14,7 @@ setup(name='item',
         '': ['global_item_config.yaml'],
       },
 
-      install_requires=['pyyaml', 'colored'],
+      install_requires=['ruamel.yaml', 'colored'],
       entry_points = {
         'console_scripts': [
             'item = item.item:main',
