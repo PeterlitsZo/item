@@ -1,6 +1,6 @@
 from .core import item as item_class
 import subprocess
-from sys import argv
+import sys
 from .color import sec, imp
 
 def deal_with_command(item, command:list):
@@ -27,7 +27,8 @@ def deal_with_command(item, command:list):
         print(imp('[ERROR] something error has happend:'), e, imp('[END ERROR]'),
               sep = '\n')
 
-def main(*argv):
+def main():
+    argv = sys.argv[1:]
     item = item_class()
 
     if len(argv) >= 1:

@@ -21,17 +21,19 @@ _help_text_:
   help_help: |-
     None
 
-# helper's config variable
+# helper's config variable
 _helper_:
-  # helper's color:
-  # (imp:important_part)(sec:secondary_part)(imp:'> ')
-  # such as: (imp:'~\path\to\dir')(sec:'(under item)')(imp:'> ')
+  # helper's color:
+  # (imp:important_part)(sec:secondary_part)(imp:'> ')
+  # such as: (imp:'~\path\to\dir')(sec:'(under item)')(imp:'> ')
   _color_:
     important_color: '#ffaaaa'
     secondary_color: '#ffff88'
 
-# when use command 'init lang' item will call '__init__/${lang}'
+# when use command 'init lang' item will call '__init__/${lang}'
 make:
 - ['!gcc', '${item_root}/src/${file_name}', -o, '${item_root}/bin/${file_name_without_suffix}']
 run:
 - ['!${item_root}/bin/${file_name}']
+setup:
+- ['!python', 'setup.py', 'install']
