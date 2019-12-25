@@ -1,16 +1,16 @@
 from pathlib import Path
 from .color import imp, sec
 from .get_Path import get_parent_dir_ls
-from .config import config, _data
+from .config import item_config
 
 class item():
     def __init__(self):
         self.item_root = Path.cwd()
-        try:
-            self.config = _data(self.item_root / 'build' / 'item_config.yaml')
-        except:
-            self.config = {}
-        self.global_config = _data(Path(__file__).parent / 'global_item_config.yaml')
+        self.local_config = item_config(self.item_root / 'build' / 'item_config.yaml')
+        self.global_config = item_config(Path(__file__).parent / 'global_item_config.yaml')
+
+    def _reload_local_config(self):
+        self.local_config = item_config(self.item_root / 'build' / 'item_config.yaml')
 
     def init(self, *command):
         # make a current dir be an 'item'
@@ -24,9 +24,7 @@ class item():
             command = command[0]
 
         if not self.is_item():
-            local_config = self.item_root / 'build' / 'item_config.yaml'
-            global_config = Path(__file__).parent / 'global_item_config.yaml'
-            config(global_config, local_config, command, self.item_root)
+            self.config_by_lang(command)
 
         else:
             print(imp('you are already are in inited item, I can\'t init it twice'))
@@ -34,7 +32,7 @@ class item():
     def is_item(self):
         # if there is 'item_config.yaml' in dir './build',
         # then it is a 'item'
-        return (self.item_root / 'build' / 'item_config.yaml').exists()
+        return self.local_config.yaml_file_exists()
 
     def input_help(self):
         # item: /path/to/item(under item) >_
@@ -46,7 +44,11 @@ class item():
 
     def cd(self, *command):
         new_dir = command[0]
-        self.item_root = Path(new_dir)
+        if new_dir[0] == '.':
+            self.item_root = Path(self.item_root / new_dir)
+        else:
+            self.item_root = Path(new_dir)
+        self._reload_local_config()
 
     def help(self, *command):
         # show the help message
@@ -55,9 +57,9 @@ class item():
         else:
             command = '_'.join([str(c) for c in command])
         try:
-            print(self.global_config['__help_text__'][f'help_{command}'])
+            print(self.global_config['_help_text_'][f'help_{command}'])
         except:
-            print(f"there is not tag called 'help_text'/'help_{command}'")
+            print(f"there is not tag called '_help_text_'/'help_{command}'")
 
     def _get_valid_file(self, path):
         # get the exist file's path
@@ -68,3 +70,20 @@ class item():
             return input_
         else:
             return self._get_valid_file(path)
+
+    def config_by_lang(self, lang):
+        self.global_config >> self.local_config
+
+        lang_config = self.global_config['__init__'][lang]
+        lang_config >> self.local_config
+
+        for dir_path in lang_config['__new_dir__']:
+            (self.item_root / dir_path).mkdir(exist_ok = True)
+        for file_path in lang_config['__file__']:
+            (self.item_root / file_path).touch(exist_ok = True)
+        for command in lang_config['__command__']:
+            if command[0][0] == '!':
+                        command[0] = command[0][1:]
+                        subprocess.run(command, cwd=self.item_root)
+
+        self.local_config.write()

@@ -1,3 +1,5 @@
+# help text, use command 'help command' will print '_help_text_/help_${command}'
+# such as: '$> help' -> print '_help_text_/help_None'
 _help_text_:
   help_None: |-
     ---------------------------------------------------------------------
@@ -21,6 +23,16 @@ _help_text_:
   help_help: |-
     None
 
+# helper's config variable
+_helper_:
+  # helper's color:
+  # (imp:important_part)(sec:secondary_part)(imp:'> ')
+  # such as: (imp:'~\path\to\dir')(sec:'(under item)')(imp:'> ')
+  _color_:
+    important_color: '#ffaaaa'
+    secondary_color: '#ffff88'
+
+# when use command 'init lang' item will call '__init__/${lang}'
 __init__:
   C:
     __new_dir__:

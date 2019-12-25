@@ -23,9 +23,9 @@ def deal_with_command(item, command:list):
 
         else:
             print(imp(f"no command '{command[0]}', enter 'h' for help"))
-    except:
-        print(imp('[ERROR] something error has happend'))
-
+    except Exception as e:
+        print(imp('[ERROR] something error has happend:'), e, imp('[END ERROR]'),
+              sep = '\n')
 
 def main(*argv):
     item = item_class()

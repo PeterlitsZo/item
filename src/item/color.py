@@ -5,7 +5,7 @@ except:
         pass
     colored.fg = lambda x: ''
     colored.attr = lambda x: ''
-        
+
 # -------------------------------------------------------------------------------------------
 important_color = '#ffaaaa'
 secondary_color = '#ffff88'

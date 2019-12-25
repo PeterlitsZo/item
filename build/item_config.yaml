@@ -1,0 +1,37 @@
+_help_text_:
+  help_None: |-
+    ---------------------------------------------------------------------
+    this is item help!
+
+    init: add dirs like 'src', 'bin', 'include', add 'build' and so on.
+    make: from src dir's file use gcc or else to build execable file.
+    run : run the execable file.
+
+    exit: exit the app_bot.
+    quit: exit the qpp_bot.
+
+    help: show this doc.
+    ---------------------------------------------------------------------
+  help_init: |-
+    None
+  help_exit: |-
+    None
+  help_quit: |-
+    None
+  help_help: |-
+    None
+
+# helper's config variable
+_helper_:
+  # helper's color:
+  # (imp:important_part)(sec:secondary_part)(imp:'> ')
+  # such as: (imp:'~\path\to\dir')(sec:'(under item)')(imp:'> ')
+  _color_:
+    important_color: '#ffaaaa'
+    secondary_color: '#ffff88'
+
+# when use command 'init lang' item will call '__init__/${lang}'
+make:
+- ['!gcc', '${item_root}/src/${file_name}', -o, '${item_root}/bin/${file_name_without_suffix}']
+run:
+- ['!${item_root}/bin/${file_name}']

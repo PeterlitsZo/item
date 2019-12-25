@@ -9,9 +9,9 @@ setup(name='item',
       author_email='peterlitszo@outlook.com',
 
       packages=find_packages('src'),
-      package_dir={'':'src'},
+      package_dir={'': 'src'},
       package_data={
-        '': ['global_item.yaml'],
+        '': ['global_item_config.yaml'],
       },
 
       install_requires=['pyyaml', 'colored'],
