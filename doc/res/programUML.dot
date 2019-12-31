@@ -7,6 +7,7 @@ digraph "classes" {
     ruamel_yaml [label="ruamel.yaml", fillcolor=3]
     colored [label="colored", fillcolor=3]
     pathlib_Path [label="pathlib.Path", fillcolor=3]
+    user_dict [label="collections.UserDict", shape=record]
 
     argv [label="other program \nwith sys.argv", fillcolor=4]
 
@@ -46,23 +47,28 @@ digraph "classes" {
     }
 
     subgraph cluster_config{
-        item_config [label="{item_config| data: dict
-                             \l yaml_faml_file_path: Path
-                             \l is_sub_config: bool
+        item_config [label="{item_config| yaml_faml_file_path: Path
                             \l| (sep method)
-                             \n __rshift__() (op '\>\>')
+                             \n __init__()
+                             \l __rshift__() (op '\>\>')
                              \l __or__() (op '\|')
                              \l __repr__() (build-in func 'repr')
-                             \l __getitem__() (op '[item]')
-                             \l __contains__() (op 'in')
-                             \l __iter__() (build-in func 'iter')
                            \l\n (com method)
                              \n write()
                              \l yaml_file_exists()
                              \l}", shape=record];
+                             
+        item_config_base [label="{item_config_base|
+                            | _reload_key_set()
+                            \l __get_item__()
+                            \l}", shape=record]
         label = "config.py";
         bgcolor = 2;
+
+        item_config -> item_config_base
     }
+
+    item_config_base -> user_dict
 
     subgraph cluster_color{
         imp [label="{imp}", shape="record"];
