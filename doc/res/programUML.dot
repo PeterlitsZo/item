@@ -1,25 +1,67 @@
 digraph "classes" {
     charset="utf-8";
-    graph [labeljust = l];
+    graph [labeljust = l, colorscheme=pastel15];
+    node [colorscheme=pastel15, style=filled, fillcolor=5];
     compound=true;
-    colorscheme=pastel13;
-    node [colorscheme=pastel13, style=filled];
+
+    ruamel_yaml [label="ruamel.yaml", fillcolor=3]
+    colored [label="colored", fillcolor=3]
+    pathlib_Path [label="pathlib.Path", fillcolor=3]
+
+    argv [label="other program \nwith sys.argv", fillcolor=4]
 
     subgraph cluster_item{
         main [label="main()", shape="record"];
         deal_with_command [label="deal_with_command()", shape="record"];
         deal_with_command -> main [label=" result"];
-        main -> deal_with_command [label=" command:list\l item:item\l"];
+        main -> deal_with_command [label=" command:list    \l item:item\l"];
         label = "item.py";
         bgcolor = 1;
     }
 
     subgraph cluster_core{
-        item [label="{item|item_root\l dir_\l config\l|
-              is_item()\l make()\l run()\l input_help()\l help()\l
-              _get_valid_file()\l}", shape="record"];
+        item [label="{item_core| item_env
+                        \l| help()
+                         \l init()
+                         \l have_command()
+                         \l run_command()
+                         \l config_by_lang()
+                         \l}", shape="record"];
         label = "core.py"
         bgcolor = 1
+    }
+    
+    subgraph cluster_item_env{
+        item_env [label="{item_env| path: Path
+                                 \l local_config: item_config
+                                 \l global_config: item_config
+                                \l| ls()
+                                 \l cd()
+                                 \l helper()
+                                 \l get_valid_file()
+                                 \l is_item_root()
+                                 \l}", shape="record"]
+        label = "env.py";
+        bgcolor = 2;
+    }
+
+    subgraph cluster_config{
+        item_config [label="{item_config| data: dict
+                             \l yaml_faml_file_path: Path
+                             \l is_sub_config: bool
+                            \l| (sep method)
+                             \n __rshift__() (op '\>\>')
+                             \l __or__() (op '\|')
+                             \l __repr__() (build-in func 'repr')
+                             \l __getitem__() (op '[item]')
+                             \l __contains__() (op 'in')
+                             \l __iter__() (build-in func 'iter')
+                           \l\n (com method)
+                             \n write()
+                             \l yaml_file_exists()
+                             \l}", shape=record];
+        label = "config.py";
+        bgcolor = 2;
     }
 
     subgraph cluster_color{
@@ -29,32 +71,13 @@ digraph "classes" {
         bgcolor = 2;
     }
 
-    subgraph cluster_read_config{
-        read_config [label="{read_config}", shape="record"];
-        label = "read_config.py";
-        bgcolor = 2;
-    }
-
-    subgraph cluster_get_Path{
-        get_valid_file [label="{get_valid_file}", shape="record"];
-        label = "get_Path.py";
-        bgcolor = 2;
-    }
-
+    ruamel_yaml -> item_config;
     colored -> imp [lhead=cluster_color];
-    pyyaml -> read_config [lhead=cluster_read_config];
+    pathlib_Path -> {item_config, item_env};
 
-    read_config -> imp [lhead=cluster_color, style=dotted, constraint=false];
-    read_config -> main [lhead=cluster_item, style=dotted];
-    read_config -> item [lhead=cluster_core, style=dotted];
-
-    imp -> main [lhead=cluster_item, ltail=cluster_color, style=dotted];
-    imp -> item [lhead=cluster_core, ltail=cluster_color, style=dotted];
-    imp -> get_valid_file [lhead=cluster_get_Path, ltail=cluster_color, style=dotted];
-
-    item -> get_valid_file;
-
-    "other program \nwith sys.argv" [fillcolor = 1]
-    "other program \nwith sys.argv" -> main;
-    deal_with_command -> item[constraint=false];
+    item_config -> item_env;
+    
+    argv -> main;
+    deal_with_command -> item;
+    item -> item_env;
 }
