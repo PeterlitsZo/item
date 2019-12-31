@@ -84,8 +84,14 @@ class item_config(object):
             # return null sub_config
             return item_config(data={})
 
+    def __contains__(self, item):
+        '''return item in self'''
+        return item in self.data
+
     def __iter__(self) -> 'iterable':
         return (self[index] for index in self.data)
+
+    # -----------------------------------------------------
 
     def _touch_yaml(self):
         if self.yaml_file_exists():
@@ -98,7 +104,7 @@ class item_config(object):
             # if there is already a yaml config file:
             return
 
-    # ------------------------------------------------
+    # ------------------------------------------------------
     def write(self):
         self._touch_yaml()
         _yamler.dump(self.data, self.yaml_file_path)

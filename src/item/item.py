@@ -1,4 +1,4 @@
-from .core import item as item_class
+from .core import item_core
 import subprocess
 import sys
 from .color import sec, imp
@@ -21,6 +21,9 @@ def deal_with_command(item, command:list):
             command[0] = command[0][1:]
             subprocess.run(command, cwd=item.item_root)
 
+        elif item.have_command(command[0]):
+            item.run_command(command)
+
         else:
             print(imp(f"no command '{command[0]}', enter 'h' for help"))
     except Exception as e:
@@ -29,7 +32,7 @@ def deal_with_command(item, command:list):
 
 def main():
     argv = sys.argv[1:]
-    item = item_class()
+    item = item_core()
 
     if len(argv) >= 1:
         # use item like: '$ item init'
@@ -40,7 +43,7 @@ def main():
         #                '/path/of/cwd > init'
         print(sec("cpp_bot:\nenter 'help' or 'h' for help"))
         while True:
-            result = deal_with_command(item, input(item.input_help()).split())
+            result = deal_with_command(item, input(item.helper()).split())
             if result == 'break': break
             if result == 'continue': continue
             print()
