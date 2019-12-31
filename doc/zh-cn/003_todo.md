@@ -7,7 +7,7 @@ TODO
 - 打算做一个vscode的插件。
 - （放弃，已经使用ruamel.yaml来代替了）听说读取配置时`libyaml`会更快一点，之后争取搞上去。（脸红）
 - 用`config`命令来修改变量。
-- 实现tab补全和模糊搜索。
+- 实现tab补全和模糊搜索。（看看fancycompleter）
 - 编写`help command`的文档。
 - 颜色标签</>。
 - 更新文档。
