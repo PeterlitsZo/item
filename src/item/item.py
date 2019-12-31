@@ -19,7 +19,7 @@ def deal_with_command(item, command:list):
             return 'break'
         elif command[0][0] == '!':
             command[0] = command[0][1:]
-            subprocess.run(command, cwd=item.item_root)
+            subprocess.run(command, cwd=item.path)
 
         elif item.have_command(command[0]):
             item.run_command(command)
