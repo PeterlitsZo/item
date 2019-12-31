@@ -43,7 +43,7 @@ def main():
         #                '/path/of/cwd > init'
         print(sec("cpp_bot:\nenter 'help' or 'h' for help"))
         while True:
-            result = deal_with_command(item, input(item.helper()).split())
+            result = deal_with_command(item, input(item.path.helper()).split())
             if result == 'break': break
             if result == 'continue': continue
             print()

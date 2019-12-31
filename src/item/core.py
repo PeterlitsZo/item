@@ -17,7 +17,7 @@ class item_core(item_env):
             return
         command = command[0]
 
-        if not self.is_item():
+        if not self.is_item_root():
             self.config_by_lang(command)
         else:
             print(imp('you are already are in inited item, I can\'t init it twice'))
@@ -31,7 +31,8 @@ class item_core(item_env):
 
     def cd(self, *command):
         new_dir = command[0]
-        self.cd(new_dir)
+        self.path.cd(new_dir)
+        self._reload_local_config()
 
     def help(self, *command):
         # show the help message
