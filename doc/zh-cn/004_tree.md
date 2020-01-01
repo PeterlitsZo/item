@@ -6,14 +6,14 @@
     - item:               # 包文件
       - __init__.py
       - color.py          # 提供着色方案
-      - core.py           # 提供item类
-      - get_Path.py       # 给定一个地址，输出该地址下的所有文件
+      - commander.py      # 提供了处理命令的接口
+      - config.py         # 提供了处理配置文件的接口
+      - core.py           # 提供item_core类，是最主要的部分，item通过调用它来运行
       - item.py           # 入口程序，处理输入输出，调用item类
-      - read_config.py    # 读取配置，返回字典
+      - path.py           # 为item提供更耦合的item_path类
       # 配置文件
       - global_config.yaml
     - item.py             # 调用item包里面的item.main()函数
-                          # 我还是不是很懂到底什么时相对引用
 - include:                # 不知道干什么，用来包含外部库的，
       ''                  # 但是python可以自己管理包，就显得很没有用
 - doc:                    # 用来包含各国语言的帮助文档
@@ -30,4 +30,5 @@
 ```
 
 而源文件保持以下的构造：
+
 ![programUML](../res/programUML.png)

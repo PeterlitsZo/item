@@ -27,6 +27,7 @@ def main():
         #                '/path/of/cwd > init'
         print(sec("item:\nenter 'help' or 'h' for help"))
         while True:
+            helper = item.path.helper('(under item)') if item.is_item_root() else item.path.helper()
             result = deal_with_command(item, input(item.path.helper()).split())
             if result == 'break': break
             if result == 'continue': continue

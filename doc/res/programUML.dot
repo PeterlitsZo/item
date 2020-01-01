@@ -21,13 +21,16 @@ digraph "classes" {
     }
 
     subgraph cluster_core{
-        item [label="{item_core| item_env
-                        \l| help()
-                         \l init()
-                         \l have_command()
-                         \l run_command()
-                         \l config_by_lang()
-                         \l}", shape="record"];
+        item [label="{
+                item_core
+            |   path: item_path
+            \l  local_config: item_config
+            \l  global_confi: item_config
+            \l  commander: item_commander
+            \l| run(command)
+            \l  is_item_root
+            \l
+        }", shape="record"]
         label = "core.py"
         bgcolor = 1
     }
@@ -43,16 +46,6 @@ digraph "classes" {
                                    \l get_vaild_file(path = '')
                                    \l}", shape="record"];
         label = "path.py";
-        bgcolor = 2;
-    }
-
-    subgraph cluster_item_env{
-        item_env [label="{item_env| path: item_path
-                                 \l local_config: item_config
-                                 \l global_config: item_config
-                                \l| is_item_root()
-                                 \l}", shape="record"]
-        label = "env.py";
         bgcolor = 2;
     }
 
@@ -78,6 +71,28 @@ digraph "classes" {
         item_config -> item_config_base [arrowhead="o"]
     }
 
+    subgraph cluster_commander{
+        item_commander [
+            label="{
+                    item_commander
+                |   cwd
+                \l  env
+                \l| __call__(iterable_or_str)
+                \l  run(command: 'iterable')
+                \l  run_external(command: 'iterable')
+                \l  init(*command)
+                \l  have_command(command)
+                \l  run_command(*command)
+                \l  cd(*command)
+                \l  help(*command)
+                \l  config_by_lang(lang)
+                \l
+            }"
+            shape="record"]
+        label = "commander.py";
+        bgcolor = 2;
+    }
+
     subgraph cluster_color{
         imp [label="{imp}", shape="record"];
         sec [label="{sec}", shape="record"];
@@ -85,16 +100,17 @@ digraph "classes" {
         bgcolor = 2;
     }
 
-    item_path -> item_env [style="dotted"];
+    item_path -> item [style="dotted"];
     item_config_base -> user_dict [arrowhead="o"]
 
     ruamel_yaml -> item_config [style="dotted"];
     colored -> imp [lhead=cluster_color, style="dotted"];
     pathlib_Path -> {item_config, item_path} [style="dotted"];
 
-    item_config -> item_env [style="dotted"];
+    item_config -> item [style="dotted"];
+
+    item_commander -> item[style="dotted"]
     
     argv -> main;
     deal_with_command -> item;
-    item -> item_env [arrowhead="o"];
 }
