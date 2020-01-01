@@ -25,10 +25,12 @@ def main():
     else:
         # use item like: '$ item'
         #                '/path/of/cwd > init'
-        print(sec("item:\nenter 'help' or 'h' for help"))
+        print(sec("item:\nenter 'help' or 'h' for help\n"))
         while True:
-            helper = item.path.helper('(under item)') if item.is_item_root() else item.path.helper()
-            result = deal_with_command(item, input(item.path.helper()).split())
+            helper = '(under item)' if item.is_item_root() else ''
+            helper = item.path.helper(helper)
+            print(helper, end='')
+            result = deal_with_command(item, input().split())
             if result == 'break': break
             if result == 'continue': continue
             print()

@@ -45,9 +45,12 @@ class item_config_base(UserDict):
 
 
 class item_config(item_config_base):
-    def __init__(self, yaml_file:Path = None):
+    def __init__(self, yaml_file:Path):
         self.yaml_file_path = yaml_file
-        super().__init__(_yamler.load(self.yaml_file_path))
+        if self.yaml_file_exists():
+            super().__init__(_yamler.load(self.yaml_file_path))
+        else:
+            super().__init__({})
 
     def __rshift__(self, other):
         """return self >> other

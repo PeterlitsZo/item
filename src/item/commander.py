@@ -25,6 +25,8 @@ class item_commander(object):
             self.init(*command[1:])
         elif command[0] in ('cd'):
             self.cd(*command[1:])
+        elif command[0] in ('ls'):
+            self.cwd.ls()
         
         elif command[0] in ('exit', 'quit', 'q'):
             return 'break'
