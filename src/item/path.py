@@ -1,7 +1,8 @@
 from pathlib import Path
 from .color import sec, imp
+import os
 
-class item_path(object):
+class item_path(os.PathLike):
     '''
     which is suppose by this class:
     1.  __truediv__ (op '/')
@@ -51,6 +52,9 @@ class item_path(object):
 
     def __getattr__(self, attr):
         return object.__getattribute__(self.path, attr)
+
+    def __fspath__(self):
+        return str(self)
 
     def __str__(self):
         return str(self.path)
