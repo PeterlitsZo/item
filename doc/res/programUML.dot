@@ -32,15 +32,25 @@ digraph "classes" {
         bgcolor = 1
     }
     
+    subgraph cluster_item_path{
+        item_path [label="{item_path| path:Path
+                                    | __getattr__()(let the attr link to self.path)
+                                   \l __truediv__()
+                                   \l
+                                   \n ls(path=None)
+                                   \l cd(path)
+                                   \l helper(string) :str
+                                   \l get_vaild_file(path = '')
+                                   \l}", shape="record"];
+        label = "path.py";
+        bgcolor = 2;
+    }
+
     subgraph cluster_item_env{
-        item_env [label="{item_env| path: Path
+        item_env [label="{item_env| path: item_path
                                  \l local_config: item_config
                                  \l global_config: item_config
-                                \l| ls()
-                                 \l cd()
-                                 \l helper()
-                                 \l get_valid_file()
-                                 \l is_item_root()
+                                \l| is_item_root()
                                  \l}", shape="record"]
         label = "env.py";
         bgcolor = 2;
@@ -65,10 +75,8 @@ digraph "classes" {
         label = "config.py";
         bgcolor = 2;
 
-        item_config -> item_config_base
+        item_config -> item_config_base [arrowhead="o"]
     }
-
-    item_config_base -> user_dict
 
     subgraph cluster_color{
         imp [label="{imp}", shape="record"];
@@ -77,13 +85,16 @@ digraph "classes" {
         bgcolor = 2;
     }
 
-    ruamel_yaml -> item_config;
-    colored -> imp [lhead=cluster_color];
-    pathlib_Path -> {item_config, item_env};
+    item_path -> item_env [style="dotted"];
+    item_config_base -> user_dict [arrowhead="o"]
 
-    item_config -> item_env;
+    ruamel_yaml -> item_config [style="dotted"];
+    colored -> imp [lhead=cluster_color, style="dotted"];
+    pathlib_Path -> {item_config, item_path} [style="dotted"];
+
+    item_config -> item_env [style="dotted"];
     
     argv -> main;
     deal_with_command -> item;
-    item -> item_env;
+    item -> item_env [arrowhead="o"];
 }
