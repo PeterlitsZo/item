@@ -65,23 +65,23 @@ class item_path(os.PathLike):
     def __truediv__(self, pathlike):
         return item_path(self.path / pathlike)
 
-    # def _tab_doc(self, iterable_of_strs) -> str:
-    #     import re
-    #     result = '  \t'.join(list(iterable_of_strs)).expandtabs(4)
-    #     output_list = []
+    def _tab_doc(self, iterable_of_strs) -> str:
+        import re
+        result = '  \t'.join(list(iterable_of_strs)).expandtabs(4)
+        output_list = []
 
-    #     end_index = [end.end() for end in re.finditer(r'\S\s', result)]
-    #     begin_index = [begin.start() for begin in re.finditer(r'\s\S', result)]
-    #     begin_flag = 0
-    #     while True:
-    #         if len(result) - begin_flag < 80:
-    #             output_list.append(result)
-    #             return '\n'.join(output_list) + '\n'
-    #         else:
-    #             end_flag = max([end for end in end_index if end < begin_flag+80])
-    #             output_list.append(result[begin_flag:end_flag])
-    #             print(begin_flag, end_flag)
-    #             begin_flag = min([begin for begin in begin_index if begin >= end_flag])
+        end_index = [end.end() for end in re.finditer(r'\S\s', result)]
+        begin_index = [begin.start() for begin in re.finditer(r'\s\S', result)]
+        begin_flag = 0
+        while True:
+            if len(result) - begin_flag < 80:
+                output_list.append(result)
+                return '\n'.join(output_list) + '\n'
+            else:
+                end_flag = max([end for end in end_index if end < begin_flag+80])
+                output_list.append(result[begin_flag:end_flag])
+                print(begin_flag, end_flag)
+                begin_flag = min([begin for begin in begin_index if begin >= end_flag])
 
     def ls(self, path = None):
         path = self.path if path == None else Path(path)
@@ -89,7 +89,7 @@ class item_path(os.PathLike):
         for file in list(path.iterdir()):
             print_string = sec(file.name+'/') if file.is_dir() else file.name
             ls_str_list.append(print_string)
-        print('  \t'.join(ls_str_list))
+        print('  \t'.join(str(res) for res in ls_str_list)) if len(ls_str_list) != 0 else print(sec('[INFO]' + 'there is not file'))
     
     def cd(self, path:str or Path):
         '''will charge the self.path'''
@@ -97,7 +97,7 @@ class item_path(os.PathLike):
         if path.is_dir():
             self.path = path
         else:
-            print(sec('[ERROR]'), 'no such file or directory')
+            print(imp('[ERROR]'), 'no such file or directory')
 
     def helper(self, string = ''):
         # item: /path/to/item(_string_) >_

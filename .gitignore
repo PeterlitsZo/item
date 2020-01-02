@@ -8,3 +8,5 @@ __pycache__/
 
 **/bdist.win-amd64/
 build/lib/item/
+
+**/*.pyc
